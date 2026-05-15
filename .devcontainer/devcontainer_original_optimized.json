@@ -1,0 +1,61 @@
+{
+    "name": "FastLED Full Toolchain DevContainer",
+
+    // Use the Dockerfile we created
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+
+    // Run as the vscode user
+    "remoteUser": "vscode",
+
+    // Ensure ESP-IDF environment is activated in every shell
+    "containerEnv": {
+        "IDF_PATH": "/opt/esp-idf",
+        "PATH": "/opt/esp-idf/tools:${PATH}"
+    },
+
+    // Mount workspace with correct permissions
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/FastLED,type=bind",
+    "workspaceFolder": "/workspaces/FastLED",
+
+    // WSL2 USB passthrough support
+    "runArgs": [
+        "--privileged",
+        "--device=/dev/bus/usb:/dev/bus/usb"
+    ],
+
+    // VS Code extensions auto-installed inside the container
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "platformio.platformio-ide",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-vscode.remote-containers",
+                "ms-vscode.remote-wsl",
+                "ms-vscode.remote-ssh",
+                "ms-vscode.makefile-tools",
+                "espressif.esp-idf-extension",
+                "ms-vscode.gitlens"
+            ]
+        }
+    },
+
+    // Post-create commands to finalize environment
+    "postCreateCommand": "bash -c 'source /opt/esp-idf/export.sh && echo ESP-IDF ready'",
+
+    // Enable features like Git, Docker-in-Docker, etc. if needed
+    // Commenting out features section to fix build issues
+    /*
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    }
+        */
+}

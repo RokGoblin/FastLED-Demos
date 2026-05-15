@@ -1,0 +1,53 @@
+{
+    "name": "FastLED Full Toolchain DevContainer",
+
+    // Use your Dockerfile (FROM ubuntu:22.04)
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+
+    // Run as the vscode user
+    "remoteUser": "vscode",
+
+    // ESP-IDF environment variables
+    "containerEnv": {
+        "IDF_PATH": "/opt/esp-idf",
+        "PATH": "/opt/esp-idf/tools:${PATH}"
+    },
+
+    // Mount workspace with correct permissions
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/FastLED,type=bind",
+    "workspaceFolder": "/workspaces/FastLED",
+
+    // WSL2 USB passthrough support
+    "runArgs": [
+        "--privileged",
+        "--device=/dev/bus/usb:/dev/bus/usb"
+    ],
+
+    // VS Code extensions auto-installed inside the container
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "platformio.platformio-ide",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-vscode.remote-containers",
+                "ms-vscode.remote-wsl",
+                "ms-vscode.remote-ssh",
+                "ms-vscode.makefile-tools",
+                "espressif.esp-idf-extension",
+                "ms-vscode.gitlens"
+            ]
+        }
+    },
+
+    // Post-create commands to finalize environment
+    "postCreateCommand": "bash -c 'source /opt/esp-idf/export.sh && echo ESP-IDF ready'"
+
+    // NOTE: features block intentionally removed
+}

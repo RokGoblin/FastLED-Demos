@@ -1,0 +1,7 @@
+{
+    "name": "FastLED DevContainer",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    }
+}
